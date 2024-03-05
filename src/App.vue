@@ -1,28 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <SearchComponent
+      :populations="populations.data"
+      :year="yearSelected"
+      @selectChange="changeSelect($event)"
+    />
+    <PopulationsContainer :populations="populations.data" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import PopulationsContainer from "./components/PopulationsContainer.vue";
+import SearchComponent from "./components/SearchComponent.vue";
 
 export default {
   name: "App",
+  data: function () {
+    return {
+      url: "https://datausa.io/api/data?drilldowns=Nation&measures=Population",
+      populations: [],
+      yearSelected: "All",
+    };
+  },
   components: {
-    HelloWorld,
+    PopulationsContainer,
+    SearchComponent,
+  },
+  methods: {
+    changeSelect: function (selected) {
+      console.log(selected);
+    },
+  },
+  mounted: function () {
+    fetch(this.url)
+      .then((response) => response.json())
+      .then((data) => {
+        this.populations = data;
+        console.log(this.populations);
+      });
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 </style>
