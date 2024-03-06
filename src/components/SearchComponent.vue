@@ -5,7 +5,7 @@
       id="search"
       class="form-control"
       :v-model="year"
-      @change="$emit('selectChange', $event)"
+      @change="$emit('selectChange', $event.target.value)"
     >
       <option value="All">All</option>
       <option

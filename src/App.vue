@@ -3,9 +3,12 @@
     <SearchComponent
       :populations="populations.data"
       :year="yearSelected"
-      @selectChange="changeSelect($event)"
+      @selectChange="changeSelect"
     />
-    <PopulationsContainer :populations="populations.data" />
+    <PopulationsContainer
+      :populations="populations.data"
+      :year="yearSelected"
+    />
   </div>
 </template>
 
@@ -28,7 +31,7 @@ export default {
   },
   methods: {
     changeSelect: function (selected) {
-      console.log(selected);
+      this.yearSelected = selected;
     },
   },
   mounted: function () {
